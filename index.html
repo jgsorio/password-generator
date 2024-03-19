@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Password Generator</title>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <h1 class="title">Gerador de Senha</h1>
+      <p class="subtitle">Utilize o nosso gerador online para criar uma senha forte e segura!</p>
+    </section>
+    <div class="principal-info">
+      <input type="text" name="password" id="password" />
+      <button onclick="copy()"><img src="./icons/copy.png" alt="copy"></button>
+      <button onclick="forceGeneratePassword()"><img src="./icons/reload.png" alt="reload" id="reload"></button>
+    </div>
+    <div class="segurity-indicator">
+      <div id="security-indicator-bar" class="bar"></div>
+    </div>
+    <div class="personalize">
+      <div class="password-length-box">
+        <span>Tamanho: <span id="password-lenght-box-info"></span></span><br>
+        <input type="range" name="password-length" id="password-length" value="16" min="4" max="64" />
+      </div>
+      <div class="types">
+        <input type="checkbox" id="maiusculas" onchange="generatePassword()"> <span>Maiusculas</span> <br>
+        <input type="checkbox" id="numeros" onchange="generatePassword()"> <span>Números</span> <br>
+        <input type="checkbox" id="simbolos" onchange="generatePassword()"> <span>Simbolos</span> <br>
+      </div>
+    </div>
+    <div id="copy">
+      <button onclick="copy()">Copiar Senha</button>
+    </div>
+  </main>
+
+  <script>
+    const passwordEl = document.querySelector('#password');
+    const passwordLengthEl = document.querySelector('#password-length');
+    const reloadEl = document.querySelector('#reload');
+    const barEl = document.querySelector('#security-indicator-bar');
+    const passwordBoxInfoSize = document.querySelector('#password-lenght-box-info');
+
+    const maiusculasCheck = document.querySelector('#maiusculas');
+    const numerosCheck = document.querySelector('#numeros');
+    const simbolosCheck = document.querySelector('#simbolos');
+
+    function generatePassword() {
+      barEl.classList.add('critical');
+      let securitylevel = 2;
+      const size = passwordLengthEl.value;
+      let chars = "abcdefghjklmnpqrstuvwxyz";
+      const maiusculas = "ABCDEFGHJKLMNPQRSTUVWXYZ";
+      const numeros = "123456789";
+      const simbolos = "?!@&*()[]+-_#$~"
+
+      if (maiusculasCheck.checked) {
+        securitylevel += 10;
+        chars += maiusculas;
+      }
+
+      if (numerosCheck.checked) {
+        securitylevel += 12;
+        chars += numeros;
+      }
+
+      if (simbolosCheck.checked) {
+        securitylevel += 22;
+        chars += simbolos
+      }
+
+      let password = "";
+
+      for (let i = 0; i < size; i++) {
+        let randomNumber = Math.floor(Math.random() * chars.length);
+        securitylevel += size / size - Math.floor(Math.random());
+        password += chars[randomNumber];
+      }
+      passwordBoxInfoSize.textContent = size;
+      passwordEl.value = password;
+      verifySecurityLevel(securitylevel, barEl);
+      barEl.style.width = securitylevel < 100 ? `${securitylevel}%` : '100%';
+    }
+
+    function copy() {
+      navigator.clipboard.writeText(passwordEl.value);
+    }
+
+    function verifySecurityLevel(security, element) {
+      element.classList.remove('warning');
+      element.classList.remove('critical');
+      element.classList.remove('safe');
+      if (security >= 0 && security <= 30) {
+        element.classList.add('critical');
+        return;
+      }
+
+      if (security >= 31 && security <= 60) {
+        element.classList.add('warning');
+        return;
+      }
+
+      element.classList.add('safe');
+
+    }
+
+    function forceGeneratePassword() {
+      const begin = setTimeout(() => {
+        reloadEl.classList.add('reload')
+        generatePassword(passwordLengthEl.value);
+      }, 300);
+      
+      setTimeout(() => {
+        reloadEl.classList.remove('reload');
+      }, 1500)
+    }
+
+    passwordLengthEl.addEventListener('input', (e) => {
+      generatePassword(e.target.value)
+    });
+
+    generatePassword();
+  </script>
+</body>
+</html>

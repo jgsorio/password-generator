@@ -1,0 +1,181 @@
+:root {
+  --primary: #0bb389;
+  --secondary: #bc6ad9;
+  --background: #f8fafd;
+  --white: #fff;
+  --critical: #d34545;
+  --warning: #e0a83e;
+  --safe: #0cb661;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background-color: var(--background);
+  padding: 2rem;
+}
+
+main {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.title {
+  font-size: 2rem;
+  padding-bottom: 1rem;
+}
+
+.subtitle {
+  font-size: 0.90rem;
+  color: #828282;
+}
+
+.principal-info {
+  display: flex;
+  background-color: var(--white);
+  padding: 20px;
+  border-bottom: 5px solid #dedede;
+  margin-bottom: 2rem;
+}
+
+.principal-info input {
+  width: 90%;
+  border: none;
+  font-size: 22px;
+}
+
+.principal-info button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.reload {
+  animation: animate 2s infinite;
+}
+
+.principal-info button img {
+  width: 30px;
+  padding: 2px;
+}
+
+.segurity-indicator {
+  position: relative;
+  top: -37px;
+}
+
+.segurity-indicator .bar {
+  height: 4px;
+}
+
+.personalize {
+  background-color: var(--white);
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.password-length-box {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.personalize #password-length {
+  display: flex;
+  width: 90%;
+  appearance: none;
+  -webkit-appearance: none;
+  background: #dddddd;
+  height: 10px;
+}
+
+.personalize #password-length::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--primary);
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.personalize #password-length::-moz-slider-thumb {
+  appearance: none;
+  -moz-appearance: none;
+  background: var(--primary);
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.types input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  position: relative;
+  top: 2px;
+  appearance: none;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.types input[type="checkbox"]:checked:after {
+  content: '✔';
+  position: absolute;
+  margin: 0 0 0 5px;
+  color: #0bb389;
+}
+
+.safe {
+  background-color: var(--safe);
+}
+
+.warning {
+  background-color: var(--warning);
+}
+
+.critical {
+  background-color: var(--critical);
+}
+
+#copy {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+#copy button {
+  border: none;
+  padding: 10px;
+  background-color: var(--primary);
+  color: var(--white);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+@keyframes animate{
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
